@@ -47,21 +47,21 @@ export default function BookingCard() {
   }
 
   return (
-    <div className="relative z-20 w-full max-w-md rounded-3xl bg-white p-6 sm:p-7 shadow-2xl border border-slate-100">
+    <div className="relative z-20 w-full max-w-md rounded-3xl bg-white p-4.5 sm:p-7 shadow-2xl border border-slate-100/90 box-border overflow-hidden">
       <h2 className="mb-4 text-center text-xl font-extrabold text-slate-900 tracking-tight">
         Book Your Taxi
       </h2>
 
       {/* Trip Tabs */}
-      <div className="mb-5 grid grid-cols-4 gap-1 p-1 bg-slate-100 rounded-2xl">
+      <div className="mb-5 grid grid-cols-4 gap-1 p-1 bg-slate-100 rounded-2xl w-full">
         {TABS.map((tab) => (
           <button
             key={tab}
             type="button"
             onClick={() => setActiveTab(tab)}
-            className={`h-9 rounded-xl text-[11px] sm:text-xs font-bold transition-all cursor-pointer ${
+            className={`h-9 w-full rounded-xl text-[10px] sm:text-xs font-extrabold transition-all cursor-pointer truncate px-0.5 ${
               activeTab === tab
-                ? "bg-[#FFB800] text-slate-950 shadow-sm"
+                ? "bg-[#FFB800] text-slate-950 shadow-xs"
                 : "text-slate-600 hover:text-slate-900"
             }`}
           >
@@ -70,113 +70,113 @@ export default function BookingCard() {
         ))}
       </div>
 
-      <form className="space-y-3.5" onSubmit={handleSubmit}>
+      <form className="space-y-3.5 w-full" onSubmit={handleSubmit}>
 
         {/* User Name Field */}
-        <div>
+        <div className="w-full">
           <label className="mb-1 block text-xs font-bold text-slate-700">Enter Your Name</label>
-          <div className="relative">
+          <div className="relative w-full">
             <input
               type="text"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your Full Name"
-              className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 pr-10 text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
+              className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 pr-10 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
             />
-            <User className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+            <User className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
           </div>
         </div>
 
         {/* Dynamic Fields based on activeTab */}
         {activeTab === "Airport" ? (
           <>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="mb-1 block text-xs font-bold text-slate-700">Transfer Type</label>
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-3 w-full">
+              <div className="min-w-0 w-full">
+                <label className="mb-1 block text-xs font-bold text-slate-700 truncate">Transfer Type</label>
                 <select
                   value={airportTransferType}
                   onChange={(e) => setAirportTransferType(e.target.value)}
-                  className="h-10.5 w-full appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm font-medium text-slate-900 outline-none focus:border-amber-400 focus:bg-white"
+                  className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-2.5 text-xs font-semibold text-slate-900 outline-none focus:border-amber-400 focus:bg-white truncate"
                 >
                   <option>Airport Drop</option>
                   <option>Airport Pickup</option>
                 </select>
               </div>
 
-              <div>
-                <label className="mb-1 block text-xs font-bold text-slate-700">Select Airport</label>
-                <div className="relative">
+              <div className="min-w-0 w-full">
+                <label className="mb-1 block text-xs font-bold text-slate-700 truncate">Select Airport</label>
+                <div className="relative w-full min-w-0">
                   <select
                     value={airportName}
                     onChange={(e) => setAirportName(e.target.value)}
-                    className="h-10.5 w-full appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-3 pr-8 text-xs font-medium text-slate-900 outline-none focus:border-amber-400 focus:bg-white"
+                    className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-2.5 pr-7 text-[11px] sm:text-xs font-semibold text-slate-900 outline-none focus:border-amber-400 focus:bg-white truncate"
                   >
                     <option>Surat Airport (STV)</option>
                     <option>Ahmedabad Airport (AMD)</option>
                     <option>Mumbai Airport (BOM)</option>
                   </select>
-                  <Plane className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-amber-500" />
+                  <Plane className="pointer-events-none absolute right-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-amber-500" />
                 </div>
               </div>
             </div>
 
-            <div>
+            <div className="w-full">
               <label className="mb-1 block text-xs font-bold text-slate-700">
                 {airportTransferType === "Airport Drop" ? "Pickup Address" : "Drop Address"}
               </label>
-              <div className="relative">
+              <div className="relative w-full">
                 <input
                   type="text"
                   required
                   value={pickup}
                   onChange={(e) => setPickup(e.target.value)}
                   placeholder="Enter location or area"
-                  className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 pr-10 text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
+                  className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 pr-10 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
                 />
-                <MapPin className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+                <MapPin className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
               </div>
             </div>
           </>
         ) : (
           <>
-            <div>
+            <div className="w-full">
               <label className="mb-1 block text-xs font-bold text-slate-700">Select Pickup City</label>
-              <div className="relative">
+              <div className="relative w-full">
                 <input
                   type="text"
                   required
                   value={pickup}
                   onChange={(e) => setPickup(e.target.value)}
                   placeholder="Click or type city name..."
-                  className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 pr-10 text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
+                  className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 pr-10 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
                 />
-                <MapPin className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+                <MapPin className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
               </div>
             </div>
 
-            <div>
+            <div className="w-full">
               <label className="mb-1 block text-xs font-bold text-slate-700">Select Drop City</label>
-              <div className="relative">
+              <div className="relative w-full">
                 <input
                   type="text"
                   required
                   value={drop}
                   onChange={(e) => setDrop(e.target.value)}
                   placeholder="Enter drop city / address"
-                  className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 pr-10 text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
+                  className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 pr-10 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
                 />
-                <MapPin className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+                <MapPin className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
               </div>
             </div>
           </>
         )}
 
-        {/* Date & Time Picker */}
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="mb-1 block text-xs font-bold text-slate-700">Pickup Date</label>
-            <div className="relative">
+        {/* Date & Time Picker Container - Fully Responsive Grid with min-w-0 for iOS */}
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 w-full">
+          <div className="min-w-0 w-full">
+            <label className="mb-1 block text-xs font-bold text-slate-700 truncate">Pickup Date</label>
+            <div className="relative w-full min-w-0">
               <input
                 type="date"
                 required
@@ -184,33 +184,33 @@ export default function BookingCard() {
                 value={pickupDate}
                 onChange={(e) => setPickupDate(e.target.value)}
                 onClick={(e) => e.currentTarget.showPicker && e.currentTarget.showPicker()}
-                className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3 pr-10 text-xs font-medium text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0"
+                className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-2.5 pr-8 text-xs font-semibold text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-date-and-time-value]:text-left [&::-webkit-date-and-time-value]:text-slate-900"
               />
-              <Calendar className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+              <Calendar className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
             </div>
           </div>
 
-          <div>
-            <label className="mb-1 block text-xs font-bold text-slate-700">Pickup Time</label>
-            <div className="relative">
+          <div className="min-w-0 w-full">
+            <label className="mb-1 block text-xs font-bold text-slate-700 truncate">Pickup Time</label>
+            <div className="relative w-full min-w-0">
               <input
                 type="time"
                 required
                 value={pickupTime}
                 onChange={(e) => setPickupTime(e.target.value)}
                 onClick={(e) => e.currentTarget.showPicker && e.currentTarget.showPicker()}
-                className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3 pr-10 text-xs font-medium text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0"
+                className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-2.5 pr-8 text-xs font-semibold text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-date-and-time-value]:text-left [&::-webkit-date-and-time-value]:text-slate-900"
               />
-              <Clock className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+              <Clock className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
             </div>
           </div>
         </div>
 
         {/* Additional Field for Round Trip / Outstation */}
         {activeTab === "Round Trip" && (
-          <div>
+          <div className="w-full">
             <label className="mb-1 block text-xs font-bold text-slate-700">Return Date</label>
-            <div className="relative">
+            <div className="relative w-full min-w-0">
               <input
                 type="date"
                 required
@@ -218,21 +218,21 @@ export default function BookingCard() {
                 value={dropDate}
                 onChange={(e) => setDropDate(e.target.value)}
                 onClick={(e) => e.currentTarget.showPicker && e.currentTarget.showPicker()}
-                className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3 pr-10 text-xs font-medium text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0"
+                className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-2.5 pr-8 text-xs font-semibold text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-date-and-time-value]:text-left [&::-webkit-date-and-time-value]:text-slate-900"
               />
-              <CalendarDays className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+              <CalendarDays className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
             </div>
           </div>
         )}
 
         {activeTab === "Outstation" && (
-          <div>
+          <div className="w-full">
             <label className="mb-1 block text-xs font-bold text-slate-700">Journey Days</label>
-            <div className="relative">
+            <div className="relative w-full min-w-0">
               <select
                 value={journeyDays}
                 onChange={(e) => setJourneyDays(e.target.value)}
-                className="h-10.5 w-full appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm font-medium text-slate-900 outline-none focus:border-amber-400 focus:bg-white"
+                className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm font-medium text-slate-900 outline-none focus:border-amber-400 focus:bg-white"
               >
                 <option>1 Days</option>
                 <option>2 Days</option>
@@ -240,20 +240,20 @@ export default function BookingCard() {
                 <option>4 Days</option>
                 <option>5+ Days</option>
               </select>
-              <CalendarDays className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+              <CalendarDays className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
             </div>
           </div>
         )}
 
         {/* Passengers Selection */}
         {activeTab !== "Airport" && (
-          <div>
+          <div className="w-full">
             <label className="mb-1 block text-xs font-bold text-slate-700">Passengers</label>
-            <div className="relative">
+            <div className="relative w-full min-w-0">
               <select
                 value={passengers}
                 onChange={(e) => setPassengers(e.target.value)}
-                className="h-10.5 w-full appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white"
+                className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-3 pr-8 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white truncate"
               >
                 <option>1 Passenger</option>
                 <option>2 Passengers</option>
@@ -263,7 +263,7 @@ export default function BookingCard() {
                 <option>7 Passengers (Innova Crysta)</option>
                 <option>12 Passengers (Tempo Traveller / Urbania)</option>
               </select>
-              <Users className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+              <Users className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
             </div>
           </div>
         )}
