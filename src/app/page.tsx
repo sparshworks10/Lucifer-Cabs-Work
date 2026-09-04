@@ -6,6 +6,7 @@ import Fleet from "@/components/fleet/Fleet"
 import Packages from "@/components/packages/Packages"
 import WhyChooseUs from "@/components/why-choose-us/WhyChooseUs"
 import Testimonials from "@/components/testimonials/Testimonials"
+import FaqSection from "@/components/seo/FaqSection"
 import CTA from "@/components/cta/CTA"
 import Footer from "@/components/layout/Footer"
 
@@ -20,6 +21,7 @@ export default function Home() {
       <Packages />
       <WhyChooseUs />
       <Testimonials />
+      <FaqSection />
       <CTA />
       <Footer />
     </>
