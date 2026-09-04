@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/admin/'],
       },
     ],
-    sitemap: 'https://lucifercabs.com/sitemap.xml',
-    host: 'https://lucifercabs.com',
+    sitemap: 'https://lucifercabs.antideploy.com/sitemap.xml',
+    host: 'https://lucifercabs.antideploy.com',
   }
 }

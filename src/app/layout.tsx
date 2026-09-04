@@ -3,28 +3,34 @@ import "./globals.css";
 import JsonLd from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lucifercabs.com"),
+  metadataBase: new URL("https://lucifercabs.antideploy.com"),
   title: {
-    default: "Lucifer Cabs | Best Outstation Taxi & Cab Rental Service Gujarat",
+    default: "Lucifer Cabs | #1 Outstation Taxi & Cab Rental Service Surat & Ahmedabad",
     template: "%s | Lucifer Cabs",
   },
   description:
-    "Book 24/7 outstation cabs, one-way taxi rentals, and airport transfers across Ahmedabad, Surat, Vadodara, Mumbai, Udaipur, and Rajkot. Best per-km rates on Sedans, SUVs, Innova Crysta, and Urbania. Call 7069300605.",
+    "Lucifer Cabs Service in Surat & Ahmedabad. Book 24/7 outstation cabs, one-way taxi rentals, Innova Crysta hire, and airport transfers across Surat, Ahmedabad, Mumbai, Vadodara, Udaipur, and Rajkot. Best rates guaranteed. Call 7069300605.",
   keywords: [
     "Lucifer Cabs",
-    "Cab Service in Ahmedabad",
-    "Outstation Taxi Ahmedabad",
+    "Lucifer Cabs service",
+    "Lucifer service in Surat",
+    "Lucifer Cabs Surat",
+    "Lucifer Cab booking",
+    "Lucifer Cabs Ahmedabad",
+    "Lucifer Cab contact number 7069300605",
+    "Cab Service in Surat",
+    "Outstation Taxi Surat",
+    "One Way Cab Surat to Mumbai",
     "Ahmedabad to Mumbai Cab",
-    "Ahmedabad to Udaipur Taxi Service",
-    "Surat Outstation Cab Rental",
-    "Innova Crysta Rental Ahmedabad",
-    "Airport Taxi Transfer Gujarat",
+    "Innova Crysta Rental Surat",
+    "Surat Airport Taxi Transfer",
+    "Ahmedabad Airport Cab Drop",
     "One Way Cab Booking Gujarat",
-    "Tempo Traveller Hire Ahmedabad",
+    "Tempo Traveller Hire Surat",
     "Force Urbania Cab Rental",
-    "24/7 Taxi Booking Ahmedabad 7069300605"
+    "24/7 Taxi Booking Surat 7069300605"
   ],
-  authors: [{ name: "Lucifer Cabs Team", url: "https://lucifercabs.com" }],
+  authors: [{ name: "Lucifer Cabs Team", url: "https://lucifercabs.antideploy.com" }],
   creator: "Lucifer Cabs",
   publisher: "Lucifer Cabs",
   formatDetection: {
@@ -33,30 +39,30 @@ export const metadata: Metadata = {
     email: true,
   },
   alternates: {
-    canonical: "/",
+    canonical: "https://lucifercabs.antideploy.com",
   },
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://lucifercabs.com",
+    url: "https://lucifercabs.antideploy.com",
     siteName: "Lucifer Cabs",
-    title: "Lucifer Cabs | Best Outstation Taxi & Cab Rental Service Gujarat",
+    title: "Lucifer Cabs | #1 Outstation Taxi & Cab Rental Service Surat & Ahmedabad",
     description:
-      "Book 24/7 outstation cabs, one-way taxi rentals, and airport transfers across Ahmedabad, Surat, Vadodara, Mumbai, Udaipur, and Rajkot. Best rates on Innova Crysta & SUVs.",
+      "Lucifer Cabs Service in Surat & Ahmedabad. Book 24/7 outstation cabs, one-way taxi rentals, and airport transfers across Surat, Ahmedabad, Vadodara, Mumbai, Udaipur, and Rajkot. Call 7069300605.",
     images: [
       {
         url: "/images/about-hero-new.jpg",
         width: 1200,
         height: 630,
-        alt: "Lucifer Cabs Outstation Taxi & Airport Transfers",
+        alt: "Lucifer Cabs Outstation Taxi & Airport Transfer Service Surat",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lucifer Cabs | Premium Outstation Taxi & Cab Booking",
+    title: "Lucifer Cabs | Premium Outstation Taxi & Cab Booking Surat",
     description:
-      "Book 24/7 outstation cabs, one-way taxi rentals, and airport transfers across Gujarat, Maharashtra & Rajasthan.",
+      "Lucifer Cabs Service in Surat & Ahmedabad. Book 24/7 outstation cabs, one-way taxi rentals, and airport transfers across Gujarat, Maharashtra & Rajasthan.",
     images: ["/images/about-hero-new.jpg"],
   },
   robots: {

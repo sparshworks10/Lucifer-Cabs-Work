@@ -1,21 +1,22 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Outstation Taxi Routes & One-Way Cab Hire | Lucifer Cabs",
+  title: "Outstation Taxi Routes & One-Way Cab Hire | Lucifer Cabs Surat",
   description:
-    "Explore outstation cab routes from Ahmedabad, Surat, Mumbai, Vadodara, Rajkot & Udaipur. Instant booking for one-way taxi & Innova Crysta rentals.",
+    "Lucifer Cabs Service Routes. Explore one-way outstation cab routes from Surat, Ahmedabad, Mumbai, Vadodara, Rajkot & Udaipur. Instant booking for Innova Crysta & SUV rentals.",
   keywords: [
-    "Outstation Cab Routes",
+    "Lucifer Cabs Routes",
+    "Lucifer Cabs Service Surat",
+    "Surat to Mumbai Cab",
     "Ahmedabad to Mumbai Cab",
-    "Ahmedabad to Udaipur Taxi",
-    "Surat to Mumbai Taxi Service",
+    "Surat to Udaipur Taxi",
     "One Way Taxi Gujarat",
     "Ahmedabad to Vadodara Cab",
-    "Innova Crysta Rental Routes",
-    "Outstation Taxi Rates Gujarat"
+    "Innova Crysta Rental Routes Surat",
+    "Outstation Taxi Rates Gujarat 7069300605"
   ],
   alternates: {
-    canonical: "/routes",
+    canonical: "https://lucifercabs.antideploy.com/routes",
   },
 }
 

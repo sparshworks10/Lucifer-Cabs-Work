@@ -2,14 +2,24 @@ export default function JsonLd() {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "TaxiService",
-    "@id": "https://lucifercabs.com/#taxiservice",
+    "@id": "https://lucifercabs.antideploy.com/#taxiservice",
     "name": "Lucifer Cabs",
-    "alternateName": "Lucifer Outstation Cabs & Taxi Services",
-    "image": "https://lucifercabs.com/images/about-hero-new.jpg",
-    "url": "https://lucifercabs.com",
+    "alternateName": [
+      "Lucifer Cabs Service",
+      "Lucifer Service in Surat",
+      "Lucifer Cab Rental Surat",
+      "Lucifer Cabs Outstation Taxi"
+    ],
+    "image": "https://lucifercabs.antideploy.com/images/about-hero-new.jpg",
+    "url": "https://lucifercabs.antideploy.com",
     "telephone": "+917069300605",
     "email": "lucifercab7@gmail.com",
     "priceRange": "₹₹",
+    "brand": {
+      "@type": "Brand",
+      "name": "Lucifer Cabs",
+      "logo": "https://lucifercabs.antideploy.com/images/about-hero-new.jpg"
+    },
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "406, Creation Plaza 1, Sitanagar to Bombay Market Road",
@@ -38,8 +48,8 @@ export default function JsonLd() {
       "closes": "23:59"
     },
     "areaServed": [
-      { "@type": "City", "name": "Ahmedabad" },
       { "@type": "City", "name": "Surat" },
+      { "@type": "City", "name": "Ahmedabad" },
       { "@type": "City", "name": "Vadodara" },
       { "@type": "City", "name": "Mumbai" },
       { "@type": "City", "name": "Udaipur" },
@@ -57,30 +67,30 @@ export default function JsonLd() {
     },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": "Cab Rental Services",
+      "name": "Lucifer Cabs Service Catalog",
       "itemListElement": [
         {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "One Way Outstation Taxi Booking",
-            "description": "Affordable one way cab rentals between Ahmedabad, Surat, Mumbai, Udaipur, and major cities."
+            "name": "Lucifer Cabs Surat - One Way Outstation Taxi",
+            "description": "Affordable one way cab rentals between Surat, Ahmedabad, Mumbai, Vadodara, and Udaipur."
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "Innova Crysta & SUV Car Rental",
-            "description": "Premium 7-seater Innova Crysta and SUV cab hiring for family vacations & luxury travel."
+            "name": "Lucifer Cabs Innova Crysta & SUV Rental",
+            "description": "Premium 7-seater Innova Crysta and Ertiga SUV cab hiring for luxury family travel in Surat."
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "24/7 Airport Taxi Pick-Up & Drop",
-            "description": "Punctual airport transfers for Ahmedabad Airport (AMD), Surat Airport (STV), and Mumbai Airport (BOM)."
+            "name": "Lucifer Cabs 24/7 Airport Transfer",
+            "description": "Punctual airport taxis for Surat Airport (STV), Ahmedabad Airport (AMD), and Mumbai Airport (BOM)."
           }
         }
       ]
@@ -93,34 +103,34 @@ export default function JsonLd() {
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "How do I book an outstation cab with Lucifer Cabs?",
+        "name": "What is Lucifer Cabs service contact number in Surat?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "You can book directly by calling +91 7069300605 or messaging us on WhatsApp. Simply provide your pickup location, destination, date, and preferred vehicle type for an instant quote."
+          "text": "You can contact Lucifer Cabs service 24/7 at +91 7069300605 or via WhatsApp for instant outstation cab quotes and airport taxi bookings."
         }
       },
       {
         "@type": "Question",
-        "name": "What is the per kilometer rate for Innova Crysta outstation taxi?",
+        "name": "How do I book Lucifer Cabs service in Surat & Ahmedabad?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Lucifer Cabs offers Toyota Innova Crysta starting at ₹18/km with transparent billing, experienced highway drivers, and dual-zone AC comfort."
+          "text": "Booking Lucifer Cabs service in Surat is simple. Call +91 7069300605 or submit your pickup, drop, date, and vehicle choice on https://lucifercabs.antideploy.com for an instant transparent quote."
         }
       },
       {
         "@type": "Question",
-        "name": "Is One-Way cab booking available from Ahmedabad to Mumbai?",
+        "name": "What are the per km rates for Innova Crysta with Lucifer Cabs?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, we offer guaranteed one-way cab services from Ahmedabad to Mumbai, Surat, Vadodara, Udaipur, and Rajkot so you only pay for one-sided distance."
+          "text": "Lucifer Cabs offers Toyota Innova Crysta starting at ₹18/km, Ertiga SUVs at ₹14/km, and Dzire Sedans at ₹11/km with zero hidden charges."
         }
       },
       {
         "@type": "Question",
-        "name": "Are airport taxi pick-up services available 24/7?",
+        "name": "Does Lucifer Cabs offer One-Way outstation rentals from Surat to Mumbai?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, Lucifer Cabs operates 24/7 airport transfer services with live flight tracking to guarantee zero wait times at Ahmedabad, Surat, and Mumbai airports."
+          "text": "Yes, Lucifer Cabs provides guaranteed one-way outstation cabs from Surat to Mumbai, Ahmedabad, Vadodara, Udaipur, and Rajkot so you only pay for one-sided travel."
         }
       }
     ]

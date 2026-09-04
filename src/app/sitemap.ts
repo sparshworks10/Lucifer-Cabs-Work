@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://lucifercabs.com'
+  const baseUrl = 'https://lucifercabs.antideploy.com'
   const currentDate = new Date()
 
   return [

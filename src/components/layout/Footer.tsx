@@ -135,8 +135,33 @@ export default function Footer() {
 
         </div>
 
+        {/* SEO Keyword & Regional Coverage Cloud for Search Engines */}
+        <div className="mt-12 pt-8 border-t border-slate-900/80">
+          <h5 className="text-[11px] font-extrabold uppercase tracking-widest text-slate-500 mb-3">
+            Lucifer Cabs Popular Search Keywords &amp; Regional Services
+          </h5>
+          <p className="text-[11px] text-slate-400 font-normal leading-relaxed space-x-2">
+            <span>Lucifer Cabs</span> •
+            <span>Lucifer Cabs Service</span> •
+            <span>Lucifer Service in Surat</span> •
+            <span>Lucifer Cabs Surat</span> •
+            <span>Lucifer Cab Booking 7069300605</span> •
+            <span>Lucifer Cabs Ahmedabad</span> •
+            <span>Outstation Cab Rental Surat</span> •
+            <span>One Way Taxi Surat to Mumbai</span> •
+            <span>Surat to Ahmedabad Cab</span> •
+            <span>Ahmedabad to Mumbai Cab Service</span> •
+            <span>Innova Crysta Rental Surat</span> •
+            <span>Surat Airport Taxi Drop (STV)</span> •
+            <span>Ahmedabad Airport Cab Pick-up (AMD)</span> •
+            <span>Mumbai Airport Outstation Taxi</span> •
+            <span>Tempo Traveller Hire Surat</span> •
+            <span>Force Urbania Rental Gujarat</span>
+          </p>
+        </div>
+
         {/* Footer Bottom */}
-        <div className="mt-12 pt-8 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center text-xs font-medium text-slate-500 gap-4">
+        <div className="mt-8 pt-6 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center text-xs font-medium text-slate-500 gap-4">
           <p>© {new Date().getFullYear()} Lucifer Cabs. All rights reserved.</p>
           <div className="flex gap-4">
             <a href="#" className="hover:text-amber-400 transition-colors">Privacy Policy</a>
