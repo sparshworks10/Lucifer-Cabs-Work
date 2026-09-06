@@ -1,46 +1,173 @@
 "use client"
 
-import { useState } from "react"
-import { MapPin, Calendar, Clock, Users, ArrowRight, ShieldCheck, User, Plane, CalendarDays } from "lucide-react"
+import { useState, useMemo } from "react"
+import { Calendar, ArrowRight, ShieldCheck, User, Plane, CalendarDays, Car, Briefcase, Users, Baby, MapPin, Clock } from "lucide-react"
 import { generateWhatsAppQuoteUrl } from "@/lib/whatsapp"
+import LocationAutocomplete from "@/components/shared/LocationAutocomplete"
+import Clock24Picker from "@/components/shared/Clock24Picker"
 
-const TABS = ["One Way", "Round Trip", "Outstation", "Airport"]
+const TABS = ["One Way", "Round Trip", "Local Packages", "Airport"]
+
+const LOCAL_PACKAGES = [
+  "4 Hour / 40 KM",
+  "6 Hour / 60 KM",
+  "8 Hour / 80 KM",
+  "10 Hour / 100 KM",
+  "12 Hour / 120 KM"
+]
+
+const VEHICLE_OPTIONS = [
+  "Sedan (Dzire / Etios)",
+  "SUV (Ertiga / Carens)",
+  "Innova Crysta",
+  "Tempo Traveller (9 / 12 / 15 / 20 Seater)",
+  "Force Urbania (16 Seater)"
+]
+
+const getCurrentTime24h = () => {
+  const now = new Date()
+  const hours = String(now.getHours()).padStart(2, "0")
+  const minutes = String(now.getMinutes()).padStart(2, "0")
+  return `${hours}:${minutes}`
+}
 
 export default function BookingCard() {
   const [activeTab, setActiveTab] = useState("One Way")
 
-  // Form State
+  // Date and Time Helpers
+  const todayStr = useMemo(() => new Date().toISOString().split("T")[0], [])
+
+  // Core Form State - Pre-populated with today's date & current 24-hour time
   const [name, setName] = useState("")
   const [pickup, setPickup] = useState("")
+  const [pickupCoords, setPickupCoords] = useState<{ lat: string; lng: string } | undefined>()
+  
   const [drop, setDrop] = useState("")
-  const [pickupDate, setPickupDate] = useState("")
-  const [pickupTime, setPickupTime] = useState("")
-  const [dropDate, setDropDate] = useState("")
-  const [journeyDays, setJourneyDays] = useState("1 Days")
-  const [passengers, setPassengers] = useState("1 Passenger")
+  const [dropCoords, setDropCoords] = useState<{ lat: string; lng: string } | undefined>()
+  
+  const [pickupDate, setPickupDate] = useState(todayStr)
+  const [pickupTime, setPickupTime] = useState(getCurrentTime24h())
+  
+  // Airport Specific State (Pure Text Input)
+  const [airportName, setAirportName] = useState("")
 
-  // Airport Specific State
-  const [airportTransferType, setAirportTransferType] = useState("Airport Drop")
-  const [airportName, setAirportName] = useState("Surat Airport (STV)")
+  // Vehicle Selection State
+  const [vehicle, setVehicle] = useState(VEHICLE_OPTIONS[0])
 
-  // Today's date string for min date picker
-  const todayStr = new Date().toISOString().split("T")[0]
+  // Local Package Specific State
+  const [localPackage, setLocalPackage] = useState(LOCAL_PACKAGES[2])
+
+  // Round Trip Specific State
+  const [dropDate, setDropDate] = useState(todayStr)
+  const [returnTime, setReturnTime] = useState(getCurrentTime24h())
+
+  // Passengers & Luggage Numeric Input States
+  const [adults, setAdults] = useState("1")
+  const [children, setChildren] = useState("0")
+  const [luggage, setLuggage] = useState("0")
+
+  const isToday = !pickupDate || pickupDate <= todayStr
+  const currentNowTime = getCurrentTime24h()
+
+  // Dynamic 24h Time Options Generator
+  const pickupTimeOptions = useMemo(() => {
+    const options: string[] = []
+    const nowTime = getCurrentTime24h()
+
+    if (isToday) {
+      options.push(nowTime)
+    }
+
+    for (let h = 0; h < 24; h++) {
+      for (let m = 0; m < 60; m += 15) {
+        const slot = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`
+        if (!isToday || slot >= nowTime) {
+          options.push(slot)
+        }
+      }
+    }
+
+    return Array.from(new Set(options)).sort()
+  }, [isToday])
+
+  const returnTimeOptions = useMemo(() => {
+    const options: string[] = []
+    for (let h = 0; h < 24; h++) {
+      for (let m = 0; m < 60; m += 15) {
+        options.push(`${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`)
+      }
+    }
+    return options
+  }, [])
+
+  // Helper for strictly numeric inputs
+  const handleNumericInput = (setter: (val: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.replace(/[^0-9]/g, "")
+    setter(val)
+  }
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedDate = e.target.value
+    if (selectedDate < todayStr) {
+      setPickupDate(todayStr)
+      return
+    }
+    setPickupDate(selectedDate)
+    
+    const nowTime = getCurrentTime24h()
+    if (selectedDate === todayStr && pickupTime < nowTime) {
+      setPickupTime(nowTime)
+    }
+  }
+
+  const handleTimeChange = (selectedTime: string) => {
+    const nowTime = getCurrentTime24h()
+    const checkIsToday = !pickupDate || pickupDate <= todayStr
+
+    if (checkIsToday && selectedTime && selectedTime < nowTime) {
+      setPickupTime(nowTime)
+      return
+    }
+    setPickupTime(selectedTime)
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+
+    const nowTime = getCurrentTime24h()
+
+    // Validate past time & date silently before submission
+    let finalDate = pickupDate
+    if (!pickupDate || pickupDate < todayStr) {
+      finalDate = todayStr
+      setPickupDate(todayStr)
+    }
+
+    let finalTime = pickupTime
+    if (finalDate === todayStr && pickupTime < nowTime) {
+      finalTime = nowTime
+      setPickupTime(nowTime)
+    }
 
     const quoteUrl = generateWhatsAppQuoteUrl({
       name,
       tripType: activeTab,
       pickup,
+      pickupLat: pickupCoords?.lat,
+      pickupLng: pickupCoords?.lng,
       drop,
-      pickupDate,
-      pickupTime,
+      dropLat: dropCoords?.lat,
+      dropLng: dropCoords?.lng,
+      pickupDate: finalDate,
+      pickupTime: finalTime,
       dropDate,
-      journeyDays,
-      airportTransferType,
-      airportName,
-      passengers,
+      returnTime,
+      localPackage: activeTab === "Local Packages" ? localPackage : undefined,
+      airportName: activeTab === "Airport" ? airportName : undefined,
+      vehicle,
+      adults,
+      children,
+      luggage
     })
 
     window.open(quoteUrl, "_blank")
@@ -88,91 +215,110 @@ export default function BookingCard() {
           </div>
         </div>
 
-        {/* Dynamic Fields based on activeTab */}
+        {/* Dynamic Location / Airport Fields */}
         {activeTab === "Airport" ? (
           <>
-            <div className="grid grid-cols-2 gap-2.5 sm:gap-3 w-full">
-              <div className="min-w-0 w-full">
-                <label className="mb-1 block text-xs font-bold text-slate-700 truncate">Transfer Type</label>
-                <select
-                  value={airportTransferType}
-                  onChange={(e) => setAirportTransferType(e.target.value)}
-                  className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-2.5 text-xs font-semibold text-slate-900 outline-none focus:border-amber-400 focus:bg-white truncate"
-                >
-                  <option>Airport Drop</option>
-                  <option>Airport Pickup</option>
-                </select>
-              </div>
-
-              <div className="min-w-0 w-full">
-                <label className="mb-1 block text-xs font-bold text-slate-700 truncate">Select Airport</label>
-                <div className="relative w-full min-w-0">
-                  <select
-                    value={airportName}
-                    onChange={(e) => setAirportName(e.target.value)}
-                    className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-2.5 pr-7 text-[11px] sm:text-xs font-semibold text-slate-900 outline-none focus:border-amber-400 focus:bg-white truncate"
-                  >
-                    <option>Surat Airport (STV)</option>
-                    <option>Ahmedabad Airport (AMD)</option>
-                    <option>Mumbai Airport (BOM)</option>
-                  </select>
-                  <Plane className="pointer-events-none absolute right-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-amber-500" />
-                </div>
-              </div>
-            </div>
-
+            {/* Airport Name - Simple Pure Text Field */}
             <div className="w-full">
-              <label className="mb-1 block text-xs font-bold text-slate-700">
-                {airportTransferType === "Airport Drop" ? "Pickup Address" : "Drop Address"}
-              </label>
+              <label className="mb-1 block text-xs font-bold text-slate-700">Airport Name</label>
               <div className="relative w-full">
                 <input
                   type="text"
                   required
-                  value={pickup}
-                  onChange={(e) => setPickup(e.target.value)}
-                  placeholder="Enter location or area"
+                  value={airportName}
+                  onChange={(e) => setAirportName(e.target.value)}
+                  placeholder="e.g. Surat Airport, Mumbai Airport"
                   className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 pr-10 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
                 />
-                <MapPin className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+                <Plane className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-3 w-full">
+              <LocationAutocomplete
+                label="Pickup Address"
+                required
+                value={pickup}
+                onChange={(val, coords) => {
+                  setPickup(val)
+                  setPickupCoords(coords)
+                }}
+                placeholder="Pickup location"
+                icon={MapPin}
+              />
+
+              <LocationAutocomplete
+                label="Drop Address"
+                required
+                value={drop}
+                onChange={(val, coords) => {
+                  setDrop(val)
+                  setDropCoords(coords)
+                }}
+                placeholder="Drop location"
+                icon={MapPin}
+              />
+            </div>
+          </>
+        ) : activeTab === "Local Packages" ? (
+          <>
+            <LocationAutocomplete
+              label="Pickup City / Address"
+              required
+              value={pickup}
+              onChange={(val, coords) => {
+                setPickup(val)
+                setPickupCoords(coords)
+              }}
+              placeholder="Enter pickup city or location..."
+              icon={MapPin}
+            />
+
+            <div className="w-full">
+              <label className="mb-1 block text-xs font-bold text-slate-700">Select Local Package</label>
+              <div className="relative w-full">
+                <select
+                  value={localPackage}
+                  onChange={(e) => setLocalPackage(e.target.value)}
+                  className="h-10.5 w-full appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm font-semibold text-slate-900 outline-none focus:border-amber-400 focus:bg-white cursor-pointer"
+                >
+                  {LOCAL_PACKAGES.map((pkg) => (
+                    <option key={pkg} value={pkg}>{pkg}</option>
+                  ))}
+                </select>
+                <Clock className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
               </div>
             </div>
           </>
         ) : (
           <>
-            <div className="w-full">
-              <label className="mb-1 block text-xs font-bold text-slate-700">Select Pickup City</label>
-              <div className="relative w-full">
-                <input
-                  type="text"
-                  required
-                  value={pickup}
-                  onChange={(e) => setPickup(e.target.value)}
-                  placeholder="Click or type city name..."
-                  className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 pr-10 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
-                />
-                <MapPin className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
-              </div>
-            </div>
+            <LocationAutocomplete
+              label="Pickup City / Address"
+              required
+              value={pickup}
+              onChange={(val, coords) => {
+                setPickup(val)
+                setPickupCoords(coords)
+              }}
+              placeholder="Enter pickup city or address..."
+              icon={MapPin}
+            />
 
-            <div className="w-full">
-              <label className="mb-1 block text-xs font-bold text-slate-700">Select Drop City</label>
-              <div className="relative w-full">
-                <input
-                  type="text"
-                  required
-                  value={drop}
-                  onChange={(e) => setDrop(e.target.value)}
-                  placeholder="Enter drop city / address"
-                  className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 pr-10 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
-                />
-                <MapPin className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
-              </div>
-            </div>
+            <LocationAutocomplete
+              label="Drop City / Address"
+              required
+              value={drop}
+              onChange={(val, coords) => {
+                setDrop(val)
+                setDropCoords(coords)
+              }}
+              placeholder="Enter drop city or destination..."
+              icon={MapPin}
+            />
           </>
         )}
 
-        {/* Date & Time Picker Container - Fully Responsive Grid with min-w-0 for iOS */}
+        {/* Pickup Date & Pickup Time (24-Hour Input with Strict Past Time Restriction) */}
         <div className="grid grid-cols-2 gap-2.5 sm:gap-3 w-full">
           <div className="min-w-0 w-full">
             <label className="mb-1 block text-xs font-bold text-slate-700 truncate">Pickup Date</label>
@@ -182,7 +328,7 @@ export default function BookingCard() {
                 required
                 min={todayStr}
                 value={pickupDate}
-                onChange={(e) => setPickupDate(e.target.value)}
+                onChange={handleDateChange}
                 onClick={(e) => e.currentTarget.showPicker && e.currentTarget.showPicker()}
                 className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-2.5 pr-8 text-xs font-semibold text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-date-and-time-value]:text-left [&::-webkit-date-and-time-value]:text-slate-900"
               />
@@ -190,83 +336,112 @@ export default function BookingCard() {
             </div>
           </div>
 
-          <div className="min-w-0 w-full">
-            <label className="mb-1 block text-xs font-bold text-slate-700 truncate">Pickup Time</label>
-            <div className="relative w-full min-w-0">
-              <input
-                type="time"
-                required
-                value={pickupTime}
-                onChange={(e) => setPickupTime(e.target.value)}
-                onClick={(e) => e.currentTarget.showPicker && e.currentTarget.showPicker()}
-                className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-2.5 pr-8 text-xs font-semibold text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-date-and-time-value]:text-left [&::-webkit-date-and-time-value]:text-slate-900"
-              />
-              <Clock className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+          <Clock24Picker
+            label="Pickup Time"
+            value={pickupTime}
+            onChange={handleTimeChange}
+            pickupDate={pickupDate}
+            required
+          />
+        </div>
+
+        {/* Round Trip Return Date & Return Time Fields */}
+        {activeTab === "Round Trip" && (
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-3 w-full">
+            <div className="min-w-0 w-full">
+              <label className="mb-1 block text-xs font-bold text-slate-700 truncate">Return Date</label>
+              <div className="relative w-full min-w-0">
+                <input
+                  type="date"
+                  required
+                  min={pickupDate || todayStr}
+                  value={dropDate}
+                  onChange={(e) => setDropDate(e.target.value)}
+                  onClick={(e) => e.currentTarget.showPicker && e.currentTarget.showPicker()}
+                  className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-2.5 pr-8 text-xs font-semibold text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-date-and-time-value]:text-left [&::-webkit-date-and-time-value]:text-slate-900"
+                />
+                <CalendarDays className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+              </div>
             </div>
+
+            <Clock24Picker
+              label="Return Time"
+              value={returnTime}
+              onChange={(val) => setReturnTime(val)}
+              pickupDate={dropDate}
+              required
+            />
+          </div>
+        )}
+
+        {/* Vehicle Selection Dropdown */}
+        <div className="w-full">
+          <label className="mb-1 block text-xs font-bold text-slate-700">Select Vehicle</label>
+          <div className="relative w-full">
+            <select
+              value={vehicle}
+              onChange={(e) => setVehicle(e.target.value)}
+              className="h-10.5 w-full appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-3 pr-8 text-xs sm:text-sm font-semibold text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white truncate cursor-pointer"
+            >
+              {VEHICLE_OPTIONS.map((v) => (
+                <option key={v} value={v}>{v}</option>
+              ))}
+            </select>
+            <Car className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
           </div>
         </div>
 
-        {/* Additional Field for Round Trip / Outstation */}
-        {activeTab === "Round Trip" && (
-          <div className="w-full">
-            <label className="mb-1 block text-xs font-bold text-slate-700">Return Date</label>
-            <div className="relative w-full min-w-0">
+        {/* Numeric Fields for Adults, Children, and Luggage (3 Columns) */}
+        <div className="grid grid-cols-3 gap-2 w-full">
+          <div>
+            <label className="mb-1 block text-[11px] font-bold text-slate-700 truncate">Adults</label>
+            <div className="relative w-full">
               <input
-                type="date"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 required
-                min={pickupDate || todayStr}
-                value={dropDate}
-                onChange={(e) => setDropDate(e.target.value)}
-                onClick={(e) => e.currentTarget.showPicker && e.currentTarget.showPicker()}
-                className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-2.5 pr-8 text-xs font-semibold text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-date-and-time-value]:text-left [&::-webkit-date-and-time-value]:text-slate-900"
+                value={adults}
+                onChange={handleNumericInput(setAdults)}
+                placeholder="1"
+                className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-3 pr-6 text-xs sm:text-sm font-bold text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white text-center"
               />
-              <CalendarDays className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+              <Users className="pointer-events-none absolute right-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-amber-500 opacity-60" />
             </div>
           </div>
-        )}
 
-        {activeTab === "Outstation" && (
-          <div className="w-full">
-            <label className="mb-1 block text-xs font-bold text-slate-700">Journey Days</label>
-            <div className="relative w-full min-w-0">
-              <select
-                value={journeyDays}
-                onChange={(e) => setJourneyDays(e.target.value)}
-                className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm font-medium text-slate-900 outline-none focus:border-amber-400 focus:bg-white"
-              >
-                <option>1 Days</option>
-                <option>2 Days</option>
-                <option>3 Days</option>
-                <option>4 Days</option>
-                <option>5+ Days</option>
-              </select>
-              <CalendarDays className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+          <div>
+            <label className="mb-1 block text-[11px] font-bold text-slate-700 truncate">Children</label>
+            <div className="relative w-full">
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                value={children}
+                onChange={handleNumericInput(setChildren)}
+                placeholder="0"
+                className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-3 pr-6 text-xs sm:text-sm font-bold text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white text-center"
+              />
+              <Baby className="pointer-events-none absolute right-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-amber-500 opacity-60" />
             </div>
           </div>
-        )}
 
-        {/* Passengers Selection */}
-        {activeTab !== "Airport" && (
-          <div className="w-full">
-            <label className="mb-1 block text-xs font-bold text-slate-700">Passengers</label>
-            <div className="relative w-full min-w-0">
-              <select
-                value={passengers}
-                onChange={(e) => setPassengers(e.target.value)}
-                className="h-10.5 w-full min-w-0 appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-3 pr-8 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white truncate"
-              >
-                <option>1 Passenger</option>
-                <option>2 Passengers</option>
-                <option>3 Passengers</option>
-                <option>4 Passengers (Sedan)</option>
-                <option>6 Passengers (Ertiga / SUV)</option>
-                <option>7 Passengers (Innova Crysta)</option>
-                <option>12 Passengers (Tempo Traveller / Urbania)</option>
-              </select>
-              <Users className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+          <div>
+            <label className="mb-1 block text-[11px] font-bold text-slate-700 truncate">Luggage</label>
+            <div className="relative w-full">
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                value={luggage}
+                onChange={handleNumericInput(setLuggage)}
+                placeholder="0"
+                className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-3 pr-6 text-xs sm:text-sm font-bold text-slate-900 outline-none transition-all focus:border-amber-400 focus:bg-white text-center"
+              />
+              <Briefcase className="pointer-events-none absolute right-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-amber-500 opacity-60" />
             </div>
           </div>
-        )}
+        </div>
 
         {/* Submit Button -> Redirection to WhatsApp */}
         <button

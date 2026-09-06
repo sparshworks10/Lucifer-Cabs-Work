@@ -1,4 +1,5 @@
 import { MapPin, Navigation, Plane, Umbrella, Briefcase, Car, ArrowRight } from "lucide-react";
+import { getPackageWhatsAppUrl } from "@/lib/whatsapp";
 
 const packages = [
   {
@@ -42,10 +43,7 @@ export function Packages() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
           {packages.map((pkg, index) => {
-            const whatsappMessage = encodeURIComponent(
-              `Hello Lucifer Cabs! I am interested in the ${pkg.title} package (${pkg.description}). Please send me the best custom quote.`
-            )
-            const whatsappUrl = `https://wa.me/919876543210?text=${whatsappMessage}`
+            const whatsappUrl = getPackageWhatsAppUrl(pkg.title, pkg.description)
 
             return (
               <div key={index} className="group flex flex-col justify-between rounded-2xl border border-slate-100 bg-white p-5 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-amber-200 hover:shadow-xl">

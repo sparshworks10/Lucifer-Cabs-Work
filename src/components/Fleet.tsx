@@ -1,14 +1,14 @@
 import { Users, Briefcase, Snowflake } from "lucide-react";
 
 const fleet = [
-  { name: "Sedan", seats: "4 Seats", luggage: "2 Bags" },
-  { name: "SUV", seats: "6 Seats", luggage: "3 Bags" },
-  { name: "Ertiga", seats: "6 Seats", luggage: "3 Bags" },
-  { name: "Innova", seats: "7 Seats", luggage: "4 Bags" },
-  { name: "Innova Crysta", seats: "7 Seats", luggage: "4 Bags" },
-  { name: "Tempo Traveller", seats: "12 Seats", luggage: "6 Bags" },
-  { name: "Urbania", seats: "12 Seats", luggage: "4 Bags" },
-  { name: "Kia Carens", seats: "6 Seats", luggage: "3 Bags" },
+  { name: "Sedan", seats: "4 Seater", luggage: "2 Bags" },
+  { name: "SUV", seats: "6 Seater", luggage: "3 Bags" },
+  { name: "Ertiga", seats: "6 Seater", luggage: "3 Bags" },
+  { name: "Innova", seats: "7 Seater", luggage: "4 Bags" },
+  { name: "Innova Crysta", seats: "7 Seater", luggage: "4 Bags" },
+  { name: "Tempo Traveller", seats: "9-12-15-20 Seater", luggage: "6 Bags" },
+  { name: "Urbania", seats: "16 Seater", luggage: "4 Bags" },
+  { name: "Kia Carens", seats: "6 Seater", luggage: "3 Bags" },
 ];
 
 export function Fleet() {

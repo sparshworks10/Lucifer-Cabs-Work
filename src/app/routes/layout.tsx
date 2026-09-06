@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "Outstation Taxi Rates Gujarat 7069300605"
   ],
   alternates: {
-    canonical: "https://lucifercabs.antideploy.com/routes",
+    canonical: "https://lucifercabs.com/routes",
   },
 }
 

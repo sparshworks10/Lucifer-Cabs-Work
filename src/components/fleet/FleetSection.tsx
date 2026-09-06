@@ -35,7 +35,7 @@ export default function FleetSection() {
                 <div className="flex justify-center items-center gap-4 mb-5 text-xs text-slate-500 font-medium">
                   <div className="flex items-center gap-1">
                     <Users className="w-3.5 h-3.5 text-amber-500" />
-                    <span>{vehicle.seats} Seats</span>
+                    <span>{String(vehicle.seats).includes("Seater") ? vehicle.seats : `${vehicle.seats} Seater`}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Briefcase className="w-3.5 h-3.5 text-amber-500" />

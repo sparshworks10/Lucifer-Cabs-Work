@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "Lucifer Cabs Contact Number 7069300605"
   ],
   alternates: {
-    canonical: "https://lucifercabs.antideploy.com/about",
+    canonical: "https://lucifercabs.com/about",
   },
 }
 

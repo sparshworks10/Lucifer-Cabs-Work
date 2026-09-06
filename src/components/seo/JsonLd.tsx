@@ -2,7 +2,7 @@ export default function JsonLd() {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "TaxiService",
-    "@id": "https://lucifercabs.antideploy.com/#taxiservice",
+    "@id": "https://lucifercabs.com/#taxiservice",
     "name": "Lucifer Cabs",
     "alternateName": [
       "Lucifer Cabs Service",
@@ -10,15 +10,15 @@ export default function JsonLd() {
       "Lucifer Cab Rental Surat",
       "Lucifer Cabs Outstation Taxi"
     ],
-    "image": "https://lucifercabs.antideploy.com/images/about-hero-new.jpg",
-    "url": "https://lucifercabs.antideploy.com",
+    "image": "https://lucifercabs.com/images/about-hero-new.jpg",
+    "url": "https://lucifercabs.com",
     "telephone": "+917069300605",
     "email": "lucifercab7@gmail.com",
     "priceRange": "₹₹",
     "brand": {
       "@type": "Brand",
       "name": "Lucifer Cabs",
-      "logo": "https://lucifercabs.antideploy.com/images/about-hero-new.jpg"
+      "logo": "https://lucifercabs.com/images/about-hero-new.jpg"
     },
     "address": {
       "@type": "PostalAddress",
@@ -114,7 +114,7 @@ export default function JsonLd() {
         "name": "How do I book Lucifer Cabs service in Surat & Ahmedabad?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Booking Lucifer Cabs service in Surat is simple. Call +91 7069300605 or submit your pickup, drop, date, and vehicle choice on https://lucifercabs.antideploy.com for an instant transparent quote."
+          "text": "Booking Lucifer Cabs service in Surat is simple. Call +91 7069300605 or submit your pickup, drop, date, and vehicle choice on https://lucifercabs.com for an instant transparent quote."
         }
       },
       {

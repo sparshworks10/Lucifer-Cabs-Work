@@ -11,13 +11,31 @@ export interface WhatsAppQuoteData {
   tripType: string
   pickup: string
   drop?: string
+  pickupLat?: string
+  pickupLng?: string
+  dropLat?: string
+  dropLng?: string
   pickupDate?: string
   pickupTime?: string
   dropDate?: string
+  returnTime?: string
+  localPackage?: string
   journeyDays?: string
   airportTransferType?: string
   airportName?: string
+  adults?: string
+  children?: string
+  luggage?: string
+  vehicle?: string
   passengers?: string
+}
+
+export const createGoogleMapsUrl = (location: string, lat?: string, lng?: string) => {
+  if (lat && lng) {
+    return `https://maps.google.com/?q=${lat},${lng}`
+  }
+  if (!location) return ""
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`
 }
 
 export const generateWhatsAppQuoteUrl = (data: WhatsAppQuoteData) => {
@@ -35,25 +53,47 @@ export const generateWhatsAppQuoteUrl = (data: WhatsAppQuoteData) => {
   }
 
   if (data.tripType === "Airport") {
-    if (data.airportTransferType) message += `✈️ *Transfer Type:* ${data.airportTransferType}\n`
-    if (data.airportName) message += `🛫 *Airport:* ${data.airportName}\n`
-    if (data.pickup) message += `📍 *Address:* ${data.pickup}\n`
+    if (data.airportName) message += `🛫 *Airport Name:* ${data.airportName}\n`
+    if (data.pickup) {
+      message += `📍 *Pickup Address:* ${data.pickup}\n`
+      message += `🗺️ *Pickup Map:* ${createGoogleMapsUrl(data.pickup, data.pickupLat, data.pickupLng)}\n`
+    }
+    if (data.drop) {
+      message += `🏁 *Drop Address:* ${data.drop}\n`
+      message += `🗺️ *Drop Map:* ${createGoogleMapsUrl(data.drop, data.dropLat, data.dropLng)}\n`
+    }
   } else {
-    message += `📍 *Pickup Location:* ${data.pickup || 'N/A'}\n`
-    if (data.drop) message += `🏁 *Drop Location:* ${data.drop}\n`
+    if (data.pickup) {
+      message += `📍 *Pickup Location:* ${data.pickup}\n`
+      message += `🗺️ *Pickup Map:* ${createGoogleMapsUrl(data.pickup, data.pickupLat, data.pickupLng)}\n`
+    }
+    if (data.tripType !== "Local Packages" && data.drop) {
+      message += `🏁 *Drop Location:* ${data.drop}\n`
+      message += `🗺️ *Drop Map:* ${createGoogleMapsUrl(data.drop, data.dropLat, data.dropLng)}\n`
+    }
+  }
+
+  if (data.localPackage) {
+    message += `⏱️ *Package:* ${data.localPackage}\n`
   }
 
   if (data.pickupDate) message += `📅 *Pickup Date:* ${data.pickupDate}\n`
   if (data.pickupTime) message += `⏰ *Pickup Time:* ${data.pickupTime}\n`
 
-  if (data.tripType === "Round Trip" || data.tripType === "Outstation") {
-    if (data.dropDate) message += `🗓️ *Return / Drop Date:* ${data.dropDate}\n`
-    if (data.journeyDays) message += `⏱️ *Duration:* ${data.journeyDays}\n`
+  if (data.tripType === "Round Trip") {
+    if (data.dropDate) message += `🗓️ *Return Date:* ${data.dropDate}\n`
+    if (data.returnTime) message += `⏰ *Return Time:* ${data.returnTime}\n`
   }
 
-  if (data.passengers) {
-    message += `👥 *Passengers:* ${data.passengers}\n`
+  if (data.vehicle) {
+    message += `🚘 *Selected Vehicle:* ${data.vehicle}\n`
   }
+
+  const adultsNum = data.adults || "1"
+  const childNum = data.children || "0"
+  const luggageNum = data.luggage || "0"
+  message += `👥 *Adults:* ${adultsNum} | 👧 *Children:* ${childNum}\n`
+  message += `🧳 *Luggage:* ${luggageNum} Bags\n`
 
   message += `\nPlease share available vehicle options and the best price quote. Thank you!`
 

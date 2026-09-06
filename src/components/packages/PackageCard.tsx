@@ -1,5 +1,6 @@
 import { Package } from "@/data/mockData"
 import { MapPin, Car, Plane, Calendar, Users, Briefcase, ArrowRight } from "lucide-react"
+import { getPackageWhatsAppUrl } from "@/lib/whatsapp"
 
 const ICONS: Record<string, React.ElementType> = {
   MapPin,
@@ -16,11 +17,7 @@ interface PackageCardProps {
 
 export default function PackageCard({ pkg }: PackageCardProps) {
   const Icon = ICONS[pkg.icon] || MapPin
-
-  const whatsappMessage = encodeURIComponent(
-    `Hello Lucifer Cabs! I am interested in the ${pkg.title} package (${pkg.description}). Please send me the best custom quote.`
-  )
-  const whatsappUrl = `https://wa.me/919876543210?text=${whatsappMessage}`
+  const whatsappUrl = getPackageWhatsAppUrl(pkg.title, pkg.description)
 
   return (
     <article className="group flex flex-col justify-between rounded-2xl border border-slate-100 bg-white p-5 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-amber-200 hover:shadow-xl">

@@ -17,7 +17,7 @@ export interface Vehicle {
   id: string
   name: string
   image: string
-  seats: number
+  seats: number | string
   bags: number
   ac: boolean
   linkText: string
@@ -96,7 +96,7 @@ export const FLEET: Vehicle[] = [
     id: "1",
     name: "Sedan",
     image: "/images/fleet/sedan.jpg",
-    seats: 4,
+    seats: "4 Seater",
     bags: 2,
     ac: true,
     linkText: "Get Quote",
@@ -107,7 +107,7 @@ export const FLEET: Vehicle[] = [
     id: "2",
     name: "SUV",
     image: "/images/fleet/suv.jpg",
-    seats: 6,
+    seats: "6 Seater",
     bags: 3,
     ac: true,
     linkText: "Get Quote",
@@ -118,7 +118,7 @@ export const FLEET: Vehicle[] = [
     id: "3",
     name: "Ertiga",
     image: "/images/fleet/ertiga.jpg",
-    seats: 6,
+    seats: "6 Seater",
     bags: 3,
     ac: true,
     linkText: "Get Quote",
@@ -129,7 +129,7 @@ export const FLEET: Vehicle[] = [
     id: "4",
     name: "Innova",
     image: "/images/fleet/innova.jpg",
-    seats: 7,
+    seats: "7 Seater",
     bags: 4,
     ac: true,
     linkText: "Get Quote",
@@ -140,7 +140,7 @@ export const FLEET: Vehicle[] = [
     id: "5",
     name: "Innova Crysta",
     image: "/images/fleet/innova-crysta.png",
-    seats: 7,
+    seats: "7 Seater",
     bags: 4,
     ac: true,
     linkText: "Get Quote",
@@ -151,7 +151,7 @@ export const FLEET: Vehicle[] = [
     id: "6",
     name: "Tempo Traveller",
     image: "/images/fleet/tempo-traveller.jpg",
-    seats: 12,
+    seats: "9-12-15-20 Seater",
     bags: 6,
     ac: true,
     linkText: "Get Quote",
@@ -162,7 +162,7 @@ export const FLEET: Vehicle[] = [
     id: "7",
     name: "Urbania",
     image: "/images/fleet/urbania.jpg",
-    seats: 12,
+    seats: "16 Seater",
     bags: 4,
     ac: true,
     linkText: "Get Quote",
@@ -173,7 +173,7 @@ export const FLEET: Vehicle[] = [
     id: "8",
     name: "Kia Carens",
     image: "/images/fleet/kia-carens.jpg",
-    seats: 6,
+    seats: "6 Seater",
     bags: 3,
     ac: true,
     linkText: "Get Quote",

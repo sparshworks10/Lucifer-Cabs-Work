@@ -3,7 +3,7 @@ import "./globals.css";
 import JsonLd from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lucifercabs.antideploy.com"),
+  metadataBase: new URL("https://lucifercabs.com"),
   title: {
     default: "Lucifer Cabs | #1 Outstation Taxi & Cab Rental Service Surat & Ahmedabad",
     template: "%s | Lucifer Cabs",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     "Force Urbania Cab Rental",
     "24/7 Taxi Booking Surat 7069300605"
   ],
-  authors: [{ name: "Lucifer Cabs Team", url: "https://lucifercabs.antideploy.com" }],
+  authors: [{ name: "Lucifer Cabs Team", url: "https://lucifercabs.com" }],
   creator: "Lucifer Cabs",
   publisher: "Lucifer Cabs",
   formatDetection: {
@@ -45,12 +45,12 @@ export const metadata: Metadata = {
     email: true,
   },
   alternates: {
-    canonical: "https://lucifercabs.antideploy.com",
+    canonical: "https://lucifercabs.com",
   },
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://lucifercabs.antideploy.com",
+    url: "https://lucifercabs.com",
     siteName: "Lucifer Cabs",
     title: "Lucifer Cabs | #1 Outstation Taxi & Cab Rental Service Surat & Ahmedabad",
     description:
