@@ -29,9 +29,10 @@ export interface Package {
   id: string
   title: string
   description: string
-  price: string
-  icon: string
-  linkText: string
+  image?: string
+  price?: string
+  icon?: string
+  linkText?: string
 }
 
 export interface Testimonial {
@@ -185,51 +186,31 @@ export const FLEET: Vehicle[] = [
 export const PACKAGES: Package[] = [
   {
     id: "1",
-    title: "Local 8 Hours / 80 KM",
-    description: "Perfect for local travel",
-    price: "2,499",
-    icon: "MapPin",
-    linkText: "Book Now",
+    title: "MOUNT ABU | RAJASTHAN",
+    description: "Scenic hill station getaway, Nakki lake & Dilwara temple tour package.",
+    image: "/images/packages/Dwarka | Somnath |Sasan.jpeg",
+    linkText: "Get Quote",
   },
   {
     id: "2",
-    title: "Outstation",
-    description: "One way or round trip",
-    price: "6,499",
-    icon: "Car",
-    linkText: "Book Now",
+    title: "SOMNATH TEMPLE | GUJARAT",
+    description: "Sacred Somnath Temple darshan and coastal heritage trip.",
+    image: "/images/packages/Somnath_temple_Gujarat_India.jpg",
+    linkText: "Get Quote",
   },
   {
     id: "3",
-    title: "Airport Transfer",
-    description: "Pickup & drop service",
-    price: "999",
-    icon: "Plane",
-    linkText: "Book Now",
+    title: "STATUE OF UNITY | POICHA",
+    description: "World's tallest Statue of Unity and Nilkanth Dham Poicha tour.",
+    image: "/images/packages/Statue of Unity |Poicha.jpeg",
+    linkText: "Get Quote",
   },
   {
     id: "4",
-    title: "Weekend Trip",
-    description: "2N/3D comfortable trip",
-    price: "9,999",
-    icon: "Calendar",
-    linkText: "Book Now",
-  },
-  {
-    id: "5",
-    title: "Family Trip",
-    description: "Safe & comfortable",
-    price: "12,999",
-    icon: "Users",
-    linkText: "Book Now",
-  },
-  {
-    id: "6",
-    title: "Corporate Travel",
-    description: "Business travel solution",
-    price: "8,999",
-    icon: "Briefcase",
-    linkText: "Book Now",
+    title: "RANN OF KUTCH",
+    description: "Magical white desert, handicraft villages and Rann Utsav package.",
+    image: "/images/packages/Rann of Kutch.jpeg",
+    linkText: "Get Quote",
   },
 ]
 

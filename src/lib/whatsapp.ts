@@ -8,6 +8,7 @@ export const DEFAULT_WHATSAPP_URL = `https://wa.me/${DEFAULT_PHONE}?text=${DEFAU
 
 export interface WhatsAppQuoteData {
   name?: string
+  phone?: string
   tripType: string
   pickup: string
   drop?: string
@@ -41,6 +42,7 @@ export const createGoogleMapsUrl = (location: string, lat?: string, lng?: string
 export const generateWhatsAppQuoteUrl = (data: WhatsAppQuoteData) => {
   const phone = DEFAULT_PHONE
   const nameStr = data.name ? data.name.trim() : ""
+  const customerPhone = data.phone ? data.phone.trim() : ""
 
   let message = `Hi Lucifer Cabs! 🚕\n\n`
   if (nameStr) {
@@ -50,6 +52,9 @@ export const generateWhatsAppQuoteUrl = (data: WhatsAppQuoteData) => {
 
   if (nameStr) {
     message += `👤 *Name:* ${nameStr}\n`
+  }
+  if (customerPhone) {
+    message += `📱 *Phone Number:* ${customerPhone}\n`
   }
 
   if (data.tripType === "Airport") {

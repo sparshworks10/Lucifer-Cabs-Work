@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Calendar, ArrowRight, ShieldCheck, User, Plane, CalendarDays, Car, Briefcase, Users, Baby, MapPin, Clock } from "lucide-react"
+import { Calendar, ArrowRight, ShieldCheck, User, Phone, Plane, CalendarDays, Car, Briefcase, Users, Baby, MapPin, Clock } from "lucide-react"
 import { generateWhatsAppQuoteUrl } from "@/lib/whatsapp"
 import LocationAutocomplete from "@/components/shared/LocationAutocomplete"
 import Clock24Picker from "@/components/shared/Clock24Picker"
@@ -17,11 +17,16 @@ const LOCAL_PACKAGES = [
 ]
 
 const VEHICLE_OPTIONS = [
-  "Sedan (Dzire / Etios)",
-  "SUV (Ertiga / Carens)",
+  "Sedan (Dzire / Hyundai Aura)",
+  "SUV (Ertiga)",
+  "Innova or Kia Carens",
   "Innova Crysta",
-  "Tempo Traveller (9 / 12 / 15 / 20 Seater)",
-  "Force Urbania (16 Seater)"
+  "Tempo Traveller (9 Seater)",
+  "Tempo Traveller (12 Seater)",
+  "Tempo Traveller (15 Seater)",
+  "Tempo Traveller (17 Seater)",
+  "Tempo Traveller (20 Seater)",
+  "Force Urbania"
 ]
 
 const getCurrentTime24h = () => {
@@ -39,6 +44,8 @@ export default function BookingCard() {
 
   // Core Form State - Pre-populated with today's date & current 24-hour time
   const [name, setName] = useState("")
+  const [phone, setPhone] = useState("")
+
   const [pickup, setPickup] = useState("")
   const [pickupCoords, setPickupCoords] = useState<{ lat: string; lng: string } | undefined>()
   
@@ -67,38 +74,30 @@ export default function BookingCard() {
   const [luggage, setLuggage] = useState("0")
 
   const isToday = !pickupDate || pickupDate <= todayStr
-  const currentNowTime = getCurrentTime24h()
 
-  // Dynamic 24h Time Options Generator
-  const pickupTimeOptions = useMemo(() => {
-    const options: string[] = []
-    const nowTime = getCurrentTime24h()
+  // Tab switch handler: completely resets all form fields to zero when switching tabs
+  const handleTabChange = (tab: string) => {
+    if (tab === activeTab) return
+    setActiveTab(tab)
 
-    if (isToday) {
-      options.push(nowTime)
-    }
-
-    for (let h = 0; h < 24; h++) {
-      for (let m = 0; m < 60; m += 15) {
-        const slot = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`
-        if (!isToday || slot >= nowTime) {
-          options.push(slot)
-        }
-      }
-    }
-
-    return Array.from(new Set(options)).sort()
-  }, [isToday])
-
-  const returnTimeOptions = useMemo(() => {
-    const options: string[] = []
-    for (let h = 0; h < 24; h++) {
-      for (let m = 0; m < 60; m += 15) {
-        options.push(`${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`)
-      }
-    }
-    return options
-  }, [])
+    // Complete zero reset of every single form field
+    setName("")
+    setPhone("")
+    setPickup("")
+    setPickupCoords(undefined)
+    setDrop("")
+    setDropCoords(undefined)
+    setAirportName("")
+    setLocalPackage(LOCAL_PACKAGES[2])
+    setPickupDate(todayStr)
+    setPickupTime(getCurrentTime24h())
+    setDropDate(todayStr)
+    setReturnTime(getCurrentTime24h())
+    setVehicle(VEHICLE_OPTIONS[0])
+    setAdults("1")
+    setChildren("0")
+    setLuggage("0")
+  }
 
   // Helper for strictly numeric inputs
   const handleNumericInput = (setter: (val: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -151,6 +150,7 @@ export default function BookingCard() {
 
     const quoteUrl = generateWhatsAppQuoteUrl({
       name,
+      phone,
       tripType: activeTab,
       pickup,
       pickupLat: pickupCoords?.lat,
@@ -185,7 +185,7 @@ export default function BookingCard() {
           <button
             key={tab}
             type="button"
-            onClick={() => setActiveTab(tab)}
+            onClick={() => handleTabChange(tab)}
             className={`h-9 w-full rounded-xl text-[10px] sm:text-xs font-extrabold transition-all cursor-pointer truncate px-0.5 ${
               activeTab === tab
                 ? "bg-[#FFB800] text-slate-950 shadow-xs"
@@ -199,19 +199,38 @@ export default function BookingCard() {
 
       <form className="space-y-3.5 w-full" onSubmit={handleSubmit}>
 
-        {/* User Name Field */}
-        <div className="w-full">
-          <label className="mb-1 block text-xs font-bold text-slate-700">Enter Your Name</label>
-          <div className="relative w-full">
-            <input
-              type="text"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Your Full Name"
-              className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 pr-10 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
-            />
-            <User className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+        {/* User Name & Phone Fields */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 w-full">
+          <div className="w-full">
+            <label className="mb-1 block text-xs font-bold text-slate-700">Enter Your Name</label>
+            <div className="relative w-full">
+              <input
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Full Name"
+                className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 pr-10 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
+              />
+              <User className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+            </div>
+          </div>
+
+          <div className="w-full">
+            <label className="mb-1 block text-xs font-bold text-slate-700">Phone Number</label>
+            <div className="relative w-full">
+              <input
+                type="tel"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                required
+                value={phone}
+                onChange={handleNumericInput(setPhone)}
+                placeholder="10-digit Phone No."
+                className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 pr-10 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
+              />
+              <Phone className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
+            </div>
           </div>
         </div>
 
@@ -462,3 +481,4 @@ export default function BookingCard() {
     </div>
   )
 }
+
