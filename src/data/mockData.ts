@@ -188,7 +188,7 @@ export const PACKAGES: Package[] = [
     id: "1",
     title: "MOUNT ABU | RAJASTHAN",
     description: "Scenic hill station getaway, Nakki lake & Dilwara temple tour package.",
-    image: "/images/packages/Dwarka | Somnath |Sasan.jpeg",
+    image: "/images/packages/DwarkaSomnath.jpeg",
     linkText: "Get Quote",
   },
   {
@@ -202,14 +202,14 @@ export const PACKAGES: Package[] = [
     id: "3",
     title: "STATUE OF UNITY | POICHA",
     description: "World's tallest Statue of Unity and Nilkanth Dham Poicha tour.",
-    image: "/images/packages/Statue of Unity |Poicha.jpeg",
+    image: "/images/packages/Statue_of_Unity.jpeg",
     linkText: "Get Quote",
   },
   {
     id: "4",
     title: "RANN OF KUTCH",
     description: "Magical white desert, handicraft villages and Rann Utsav package.",
-    image: "/images/packages/Rann of Kutch.jpeg",
+    image: "/images/packages/Rann_of_Kutch.jpeg",
     linkText: "Get Quote",
   },
 ]
