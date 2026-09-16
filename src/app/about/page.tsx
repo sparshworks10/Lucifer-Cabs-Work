@@ -158,6 +158,7 @@ export default function AboutPage() {
                   src="/images/about-hero-new.jpg"
                   alt="Lucifer Cabs Surat Airport Service"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
                   className="object-cover"
                   priority
                 />
@@ -195,6 +196,7 @@ export default function AboutPage() {
                 src="/images/about-story-fleet.jpg"
                 alt="Lucifer Cabs Team & Fleet"
                 fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
@@ -235,7 +237,15 @@ export default function AboutPage() {
                   <div>
                     <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1">Office Address</h4>
                     <p className="text-xs text-slate-600 font-medium leading-relaxed">
-                      406, Creation Plaza 1, Sitanagar to Bombay Market Road, Surat - 395010
+                      <a
+                        href="https://www.google.com/maps/search/?api=1&query=406+Creation+Plaza+1+Sitanagar+to+Bombay+Market+Road+Surat+395010"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-amber-600 hover:underline transition-colors cursor-pointer"
+                        title="Open location on Google Maps"
+                      >
+                        406, Creation Plaza 1, Sitanagar to Bombay Market Road, Surat - 395010
+                      </a>
                     </p>
                   </div>
                 </div>

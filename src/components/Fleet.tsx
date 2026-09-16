@@ -9,6 +9,8 @@ const fleet = [
   { name: "Tempo Traveller", seats: "9-12-15-20 Seater", luggage: "6 Bags" },
   { name: "Urbania", seats: "16 Seater", luggage: "4 Bags" },
   { name: "Kia Carens", seats: "6 Seater", luggage: "3 Bags" },
+  { name: "Premium Car", seats: "4 Seater", luggage: "3 Bags" },
+  { name: "Volvo Bus", seats: "25-50 Seater", luggage: "15+ Bags" },
 ];
 
 export function Fleet() {
@@ -26,7 +28,7 @@ export function Fleet() {
           </button>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 lg:gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-4 lg:gap-2">
           {fleet.map((car, index) => (
             <div key={index} className="flex flex-col items-center text-center p-2 group hover:-translate-y-1 transition-transform cursor-pointer">
               {/* Image Placeholder */}

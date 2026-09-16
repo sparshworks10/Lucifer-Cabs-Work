@@ -36,6 +36,13 @@ export const createGoogleMapsUrl = (location: string, lat?: string, lng?: string
     return `https://maps.google.com/?q=${lat},${lng}`
   }
   if (!location) return ""
+
+  // Auto-detect coordinate patterns like "21.1702, 72.8311" inside text
+  const coordMatch = location.match(/(-?\d{1,2}\.\d+)\s*,\s*(-?\d{1,3}\.\d+)/)
+  if (coordMatch) {
+    return `https://maps.google.com/?q=${coordMatch[1]},${coordMatch[2]}`
+  }
+
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`
 }
 

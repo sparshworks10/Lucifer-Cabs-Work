@@ -19,14 +19,17 @@ const LOCAL_PACKAGES = [
 const VEHICLE_OPTIONS = [
   "Sedan (Dzire / Hyundai Aura)",
   "SUV (Ertiga)",
-  "Innova or Kia Carens",
+  "Kia Carens",
+  "Innova",
   "Innova Crysta",
+  "Premium Car (Mercedes / BMW)",
   "Tempo Traveller (9 Seater)",
   "Tempo Traveller (12 Seater)",
   "Tempo Traveller (15 Seater)",
   "Tempo Traveller (17 Seater)",
   "Tempo Traveller (20 Seater)",
-  "Force Urbania"
+  "Force Urbania",
+  "Volvo Bus (Sitting / Sleeper 25-50 Seater)"
 ]
 
 const getCurrentTime24h = () => {
@@ -237,26 +240,22 @@ export default function BookingCard() {
         {/* Dynamic Location / Airport Fields */}
         {activeTab === "Airport" ? (
           <>
-            {/* Airport Name - Simple Pure Text Field */}
-            <div className="w-full">
-              <label className="mb-1 block text-xs font-bold text-slate-700">Airport Name</label>
-              <div className="relative w-full">
-                <input
-                  type="text"
-                  required
-                  value={airportName}
-                  onChange={(e) => setAirportName(e.target.value)}
-                  placeholder="e.g. Surat Airport, Mumbai Airport"
-                  className="h-10.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 pr-10 text-xs sm:text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-amber-400 focus:bg-white"
-                />
-                <Plane className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
-              </div>
-            </div>
+            {/* Airport Name - Upgraded Autocomplete with Popular Airport Quick Chips & Instant Search */}
+            <LocationAutocomplete
+              label="Airport Name"
+              required
+              mode="airport"
+              value={airportName}
+              onChange={(val) => setAirportName(val)}
+              placeholder="Search or select airport (e.g. Surat, Mumbai, Ahmedabad)..."
+              icon={Plane}
+            />
 
             <div className="grid grid-cols-2 gap-2.5 sm:gap-3 w-full">
               <LocationAutocomplete
                 label="Pickup Address"
                 required
+                mode="city"
                 value={pickup}
                 onChange={(val, coords) => {
                   setPickup(val)
@@ -269,6 +268,7 @@ export default function BookingCard() {
               <LocationAutocomplete
                 label="Drop Address"
                 required
+                mode="city"
                 value={drop}
                 onChange={(val, coords) => {
                   setDrop(val)
@@ -284,6 +284,7 @@ export default function BookingCard() {
             <LocationAutocomplete
               label="Pickup City / Address"
               required
+              mode="city"
               value={pickup}
               onChange={(val, coords) => {
                 setPickup(val)
@@ -314,6 +315,7 @@ export default function BookingCard() {
             <LocationAutocomplete
               label="Pickup City / Address"
               required
+              mode="city"
               value={pickup}
               onChange={(val, coords) => {
                 setPickup(val)
@@ -326,6 +328,7 @@ export default function BookingCard() {
             <LocationAutocomplete
               label="Drop City / Address"
               required
+              mode="city"
               value={drop}
               onChange={(val, coords) => {
                 setDrop(val)

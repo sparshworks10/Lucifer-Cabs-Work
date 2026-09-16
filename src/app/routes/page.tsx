@@ -33,17 +33,34 @@ export default function RoutesPage() {
       )
     }
 
-    // Filter by search query if typed
+    // Filter by search query if typed (with alias support for SUR, AHE, UJJ, IND, MUM, DEL, etc.)
     if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase().trim()
+      const rawQuery = searchQuery.toLowerCase().trim()
+      const clean = rawQuery.replace(/[^a-z0-9]/g, "")
+
+      // Alias mapping
+      let expandedQueries = [rawQuery]
+      if (clean === "sur" || clean === "stv") expandedQueries.push("surat")
+      if (clean === "ahe" || clean === "ahem" || clean === "amd") expandedQueries.push("ahmedabad")
+      if (clean === "ujj" || clean === "ujn") expandedQueries.push("ujjain")
+      if (clean === "ind" || clean === "in" || clean === "idr") expandedQueries.push("indore")
+      if (clean === "mum" || clean === "bom") expandedQueries.push("mumbai")
+      if (clean === "del" || clean === "igi") expandedQueries.push("delhi")
+      if (clean === "raj" || clean === "hsr") expandedQueries.push("rajkot")
+      if (clean === "vad" || clean === "bdq") expandedQueries.push("vadodara")
+      if (clean === "uda" || clean === "udr") expandedQueries.push("udaipur")
+      if (clean === "pun" || clean === "pnq") expandedQueries.push("pune")
+
       result = result
         .map((cat) => {
-          const matchingRoutes = cat.routes.filter(
-            (r) =>
-              r.name.toLowerCase().includes(query) ||
-              r.from.toLowerCase().includes(query) ||
-              r.to.toLowerCase().includes(query)
-          )
+          const matchingRoutes = cat.routes.filter((r) => {
+            const nameLower = r.name.toLowerCase()
+            const fromLower = r.from.toLowerCase()
+            const toLower = r.to.toLowerCase()
+            return expandedQueries.some(
+              (q) => nameLower.includes(q) || fromLower.includes(q) || toLower.includes(q)
+            )
+          })
           return {
             ...cat,
             routes: matchingRoutes,

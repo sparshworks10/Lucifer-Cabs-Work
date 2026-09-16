@@ -17,7 +17,7 @@ export default function FleetSection() {
           </button>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {FLEET.map((vehicle) => (
             <div key={vehicle.id} className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group p-5 text-center flex flex-col justify-between">
               <div>

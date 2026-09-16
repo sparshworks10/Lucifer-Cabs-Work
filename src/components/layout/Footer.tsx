@@ -116,7 +116,15 @@ export default function Footer() {
             <ul className="space-y-3 text-sm font-medium">
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 shrink-0 text-amber-400 mt-0.5" />
-                <span className="leading-snug">406, Creation Plaza 1, Sitanagar to Bombay Market Road, Surat - 395010</span>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=406+Creation+Plaza+1+Sitanagar+to+Bombay+Market+Road+Surat+395010"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="leading-snug hover:text-amber-400 hover:underline transition-colors cursor-pointer"
+                  title="Open location on Google Maps"
+                >
+                  406, Creation Plaza 1, Sitanagar to Bombay Market Road, Surat - 395010
+                </a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-4 w-4 shrink-0 text-amber-400" />

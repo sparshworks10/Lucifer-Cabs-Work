@@ -29,7 +29,7 @@ export default function PackageCard({ pkg }: PackageCardProps) {
         )}
 
         {/* Title Yellow/Amber Pill Badge */}
-        <div className="mb-2.5 w-full rounded-full bg-[#FFB800] px-3 py-1.5 text-center text-xs font-black uppercase tracking-wider text-slate-950 shadow-xs truncate">
+        <div className="mb-2.5 w-full min-h-[36px] flex items-center justify-center rounded-2xl bg-[#FFB800] px-3 py-1.5 text-center text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-950 shadow-xs leading-tight">
           {pkg.title}
         </div>
 
