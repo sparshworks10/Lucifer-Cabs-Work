@@ -22,7 +22,7 @@ const VEHICLE_OPTIONS = [
   "Kia Carens",
   "Innova",
   "Innova Crysta",
-  "Premium Car (Mercedes / BMW)",
+  "Premium Car",
   "Tempo Traveller (9 Seater)",
   "Tempo Traveller (12 Seater)",
   "Tempo Traveller (15 Seater)",
