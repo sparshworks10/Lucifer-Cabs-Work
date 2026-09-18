@@ -73,7 +73,21 @@ export default function Navigation() {
     }
 
     if (window.location.hash && pathname === "/") {
-      setActiveHash(`/${window.location.hash}`)
+      const hash = window.location.hash
+      setActiveHash(`/${hash}`)
+      const targetId = hash.replace("#", "")
+      setTimeout(() => {
+        const targetElement = document.getElementById(targetId)
+        if (targetElement) {
+          const navOffset = 80
+          const elementPosition = targetElement.getBoundingClientRect().top
+          const offsetPosition = elementPosition + window.pageYOffset - navOffset
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          })
+        }
+      }, 150)
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })

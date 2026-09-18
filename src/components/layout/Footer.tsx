@@ -35,7 +35,7 @@ const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function Footer() {
   return (
-    <footer id="contact" className="relative bg-slate-950 text-slate-400 pt-16 pb-12 border-t border-slate-900">
+    <footer className="relative bg-slate-950 text-slate-400 pt-16 pb-12 border-t border-slate-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
@@ -111,7 +111,7 @@ export default function Footer() {
           </div>
 
           {/* Col 5: Contact Us */}
-          <div>
+          <div id="contact" className="scroll-mt-28">
             <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-white">Contact Us</h4>
             <ul className="space-y-3 text-sm font-medium">
               <li className="flex items-start gap-3">
